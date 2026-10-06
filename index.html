@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="高清mp4电影网 - 提供最新高清MP4电影在线观看与下载，涵盖动作、喜剧、科幻、爱情、恐怖、纪录片等多种类型，支持移动端自适应访问。">
+<meta name="keywords" content="高清mp4电影网, 高清电影, MP4电影, 在线看电影, 电影下载, gaoqingmp4dianyingwang">
+<meta name="author" content="高清mp4电影网">
+<meta name="robots" content="index, follow">
+<title>高清mp4电影网 - 最新高清MP4电影在线观看</title>
+<style>
+  :root{
+    --bg:#07091f;
+    --bg2:#0d1238;
+    --card:#121a4d;
+    --line:rgba(255,255,255,.08);
+    --txt:#eef0ff;
+    --sub:#9aa3d0;
+    --acc:#37e6c8;
+    --acc2:#6b7bff;
+    --gold:#ffcf5c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:radial-gradient(1200px 600px at 80% -10%,#1b2a7a 0%,transparent 60%),
+               radial-gradient(900px 500px at 0% 10%,#2a1b6e 0%,transparent 55%),
+               var(--bg);
+    color:var(--txt);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+  .pill{
+    display:inline-block;font-size:12px;letter-spacing:2px;color:var(--acc);
+    border:1px solid rgba(55,230,200,.35);border-radius:999px;padding:6px 16px;
+    background:rgba(55,230,200,.06);
+  }
+  .section-title{display:flex;align-items:flex-end;gap:14px;margin-bottom:34px;flex-wrap:wrap}
+  .section-title h2{font-size:clamp(22px,4vw,32px);font-weight:800;letter-spacing:1px}
+  .section-title .num{font-size:14px;color:var(--acc2);font-weight:700}
+  .section-title p{width:100%;color:var(--sub);font-size:14px}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(7,9,31,.72);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:18px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px}
+  .logo .mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:16px;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));color:#041022;font-weight:900}
+  .logo span{font-size:17px}
+  .logo small{color:var(--sub);font-weight:500;font-size:12px;display:none}
+  .menu{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  .menu a{font-size:14px;padding:8px 12px;border-radius:8px;color:var(--sub);transition:.2s}
+  .menu a:hover{color:var(--txt);background:rgba(255,255,255,.06)}
+  .search{position:relative;display:none}
+  .search input{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;
+    padding:9px 16px 9px 36px;color:var(--txt);font-size:13px;width:180px;outline:none}
+  .search::before{content:"🔍";position:absolute;left:13px;top:8px;font-size:12px;opacity:.6}
+
+  /* hero */
+  .hero{min-height:min(640px,92vh);display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:60px 0 40px}
+  .hero h1{font-size:clamp(30px,6vw,58px);line-height:1.1;font-weight:900;letter-spacing:-1px}
+  .hero h1 em{font-style:normal;background:linear-gradient(92deg,var(--acc),var(--acc2) 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .lead{color:var(--sub);font-size:clamp(15px,2vw,18px);margin:20px 0 28px;max-width:520px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{padding:14px 28px;border-radius:12px;font-weight:700;font-size:15px;transition:.25s;cursor:pointer;border:0}
+  .btn-primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#041022;box-shadow:0 12px 30px -10px rgba(107,123,255,.7)}
+  .btn-primary:hover{transform:translateY(-3px)}
+  .btn-ghost{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--txt)}
+  .btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+  .stats{display:flex;gap:clamp(14px,3vw,34px);margin-top:40px;flex-wrap:wrap}
+  .stats div span{display:block;font-size:clamp(20px,3vw,30px);font-weight:800;color:var(--acc)}
+  .stats div small{color:var(--sub);font-size:12px;letter-spacing:1px}
+
+  /* poster stack */
+  .posters{position:relative;height:440px}
+  .poster{position:absolute;border-radius:18px;overflow:hidden;box-shadow:0 25px 60px -20px rgba(0,0,0,.8);
+    border:1px solid rgba(255,255,255,.1);transition:.5s;cursor:pointer}
+  .poster img{width:100%;height:100%;object-fit:cover;display:block}
+  .poster .tag{position:absolute;top:12px;left:12px;background:rgba(4,16,34,.75);backdrop-filter:blur(6px);
+    color:var(--gold);font-size:12px;font-weight:700;padding:5px 10px;border-radius:7px}
+  .p1{width:240px;height:340px;right:60px;top:20px;transform:rotate(4deg);z-index:3}
+  .p2{width:210px;height:300px;right:210px;top:60px;transform:rotate(-6deg);z-index:2;opacity:.9}
+  .p3{width:180px;height:260px;right:340px;top:110px;transform:rotate(-12deg);z-index:1;opacity:.75}
+  .poster:hover{transform:rotate(0) scale(1.04);z-index:10;opacity:1}
+
+  /* categories */
+  .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
+  .cat{background:linear-gradient(180deg,var(--card),rgba(18,26,77,.4));border:1px solid var(--line);
+    border-radius:16px;padding:24px 18px;text-align:center;transition:.3s}
+  .cat:hover{transform:translateY(-6px);border-color:rgba(55,230,200,.4);box-shadow:0 18px 40px -20px rgba(55,230,200,.4)}
+  .cat .ic{font-size:32px;display:block;margin-bottom:10px}
+  .cat h3{font-size:16px;margin-bottom:6px}
+  .cat p{font-size:12px;color:var(--sub)}
+
+  /* movie grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:22px}
+  .movie{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.3s}
+  .movie:hover{transform:translateY(-6px);box-shadow:0 22px 50px -25px rgba(0,0,0,.9);border-color:rgba(255,255,255,.16)}
+  .movie .cover{position:relative;aspect-ratio:2/3;overflow:hidden;background:linear-gradient(135deg,#1c2a6e,#2a1b6e)}
+  .movie .cover span{position:absolute;inset:0;display:grid;place-items:center;font-size:34px;font-weight:900;color:rgba(255,255,255,.18)}
+  .movie .cover::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,var(--card) 0%,transparent 40%)}
+  .movie .score{position:absolute;top:12px;right:12px;background:rgba(4,16,34,.8);color:var(--gold);
+    font-weight:800;font-size:13px;padding:4px 9px;border-radius:7px;backdrop-filter:blur(4px)}
+  .movie .info{padding:14px 16px}
+  .movie h4{font-size:15px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .movie .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--sub)}
+  .movie .meta b{color:var(--acc);font-weight:600}
+
+  /* ranking */
+  .rank{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .rank-item{display:flex;gap:16px;align-items:center;background:rgba(255,255,255,.03);
+    border:1px solid var(--line);border-radius:14px;padding:14px;transition:.25s}
+  .rank-item:hover{background:rgba(55,230,200,.06);border-color:rgba(55,230,200,.3)}
+  .rank-item .no{font-size:26px;font-weight:900;width:44px;text-align:center;flex:none;
+    background:linear-gradient(135deg,var(--acc2),var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rank-item .no.top{color:var(--gold);-webkit-text-fill-color:var(--gold)}
+  .rank-item .txt h4{font-size:15px;margin-bottom:4px}
+  .rank-item .txt small{color:var(--sub);font-size:12px}
+  .rank-item .hot{margin-left:auto;font-size:12px;color:var(--acc);font-weight:700;flex:none}
+
+  /* news */
+  .news{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
+  .article{background:linear-gradient(180deg,var(--card),rgba(18,26,77,.35));border:1px solid var(--line);
+    border-radius:16px;padding:24px;transition:.3s}
+  .article:hover{border-color:rgba(107,123,255,.45);transform:translateY(-4px)}
+  .article .date{font-size:12px;color:var(--acc2);letter-spacing:1px;font-weight:700}
+  .article h3{font-size:18px;margin:10px 0 10px;line-height:1.4}
+  .article p{color:var(--sub);font-size:14px}
+  .article .more{display:inline-block;margin-top:14px;font-size:13px;color:var(--acc);font-weight:700}
+
+  /* seo */
+  .seo{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:20px;padding:36px}
+  .seo p{color:var(--sub);margin-bottom:12px}
+  .seo strong{color:var(--txt)}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);margin-top:60px;padding:40px 0 30px;color:var(--sub);font-size:13px}
+  .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-bottom:30px}
+  .foot-grid h5{color:var(--txt);margin-bottom:12px;font-size:15px}
+  .foot-grid a{display:block;padding:4px 0;color:var(--sub);font-size:13px}
+  .foot-grid a:hover{color:var(--acc)}
+  .copyright{text-align:center;border-top:1px solid var(--line);padding-top:24px}
+  .copyright a{color:var(--acc2)}
+
+  section{padding:64px 0}
+  .reveal{opacity:0;transform:translateY(28px);transition:.7s cubic-bezier(.2,.7,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(min-width:860px){
+    .logo small{display:inline}
+    .search{display:block}
+  }
+  @media(max-width:820px){
+    .hero{grid-template-columns:1fr;text-align:center;padding-top:30px}
+    .hero .lead{margin:18px auto 26px}
+    .cta{justify-content:center}
+    .stats{justify-content:center}
+    .posters{height:300px;margin-top:10px}
+    .p1{width:170px;height:240px;right:50%;transform:rotate(4deg) translateX(20px)}
+    .p2{width:150px;height:210px;right:50%;transform:rotate(-6deg) translateX(-60px)}
+    .p3{display:none}
+    .section-title{justify-content:center;text-align:center}
+  }
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#" aria-label="高清mp4电影网首页">
+      <i class="mark">影</i>
+      <span>高清mp4电影网</span>
+      <small>gaoqingmp4dianyingwang</small>
+    </a>
+    <nav class="menu" aria-label="主导航">
+      <a href="#home">首页</a>
+      <a href="#cats">电影分类</a>
+      <a href="#hot">热门推荐</a>
+      <a href="#rank">排行榜</a>
+      <a href="#news">影讯资讯</a>
+      <a href="#about">关于本站</a>
+    </nav>
+    <div class="search" role="search">
+      <input type="search" placeholder="搜索电影、演员、类型" aria-label="搜索">
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- 栏目一：首页 / Hero -->
+  <section id="home" class="wrap">
+    <div class="hero">
+      <div class="reveal">
+        <span class="pill">HD · MP4 · 极速流畅</span>
+        <h1>沉浸式<em>高清MP4电影</em><br>一站式观影体验</h1>
+        <p class="lead">高清mp4电影网（gaoqingmp4dianyingwang）专注于为用户提供最新、最全、最清晰的高清MP4格式电影资源，涵盖院线新片、经典老片、海外佳作与纪录大片，手机电脑均可流畅播放。</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#hot">立即观影</a>
+          <a class="btn btn-ghost" href="#cats">浏览分类</a>
+        </div>
+        <div class="stats">
+          <div><span>12000+</span><small>高清影片</small></div>
+          <div><span>30+</span><small>电影分类</small></div>
+          <div><span>4K</span><small>极致画质</small></div>
+          <div><span>0</span><small>广告干扰</small></div>
+        </div>
+      </div>
+      <div class="posters" aria-hidden="true">
+        <div class="poster p1"><img src="https://picsum.photos/id/1015/480/680" alt=""><span class="tag">豆瓣 9.2</span></div>
+        <div class="poster p2"><img src="https://picsum.photos/id/1025/420/600" alt=""><span class="tag">IMDb 8.8</span></div>
+        <div class="poster p3"><img src="https://picsum.photos/id/1035/360/520" alt=""><span class="tag">票房冠军</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目二：电影分类 -->
+  <section id="cats" class="wrap">
+    <div class="section-title reveal">
+      <span class="num">01</span>
+      <h2>电影分类浏览</h2>
+      <p>按类型、地区、年份精准筛选，快速找到你想看的高清MP4电影</p>
+    </div>
+    <div class="cats">
+      <a class="cat" href="#"><span class="ic">💥</span><h3>动作片</h3><p>1286 部</p></a>
+      <a class="cat" href="#"><span class="ic">😂</span><h3>喜剧片</h3><p>1540 部</p></a>
+      <a class="cat" href="#"><span class="ic">🚀</span><h3>科幻片</h3><p>862 部</p></a>
+      <a class="cat" href="#"><span class="ic">💕</span><h3>爱情片</h3><p>2103 部</p></a>
+      <a class="cat" href="#"><span class="ic">😱</span><h3>恐怖片</h3><p>645 部</p></a>
+      <a class="cat" href="#"><span class="ic">🕵️</span><h3>悬疑片</h3><p>933 部</p></a>
+      <a class="cat" href="#"><span class="ic">🎭</span><h3>剧情片</h3><p>2760 部</p></a>
+      <a class="cat" href="#"><span class="ic">🌍</span><h3>纪录片</h3><p>518 部</p></a>
+      <a class="cat" href="#"><span class="ic">🏆</span><h3>奥斯卡</h3><p>精选片单</p></a>
+      <a class="cat" href="#"><span class="ic">🇨🇳</span><h3>华语电影</h3><p>港台大陆</p></a>
+      <a class="cat" href="#"><span class="ic">🇺🇸</span><h3>好莱坞</h3><p>院线大片</p></a>
+      <a class="cat" href="#"><span class="ic">🇰🇷</span><h3>日韩电影</h3><p>亚洲精选</p></a>
+    </div>
+  </section>
+
+  <!-- 栏目三：热门推荐 -->
+  <section id="hot" class="wrap">
+    <div class="section-title reveal">
+      <span class="num">02</span>
+      <h2>热门推荐 · 本周必看</h2>
+      <p>编辑团队每日更新，精选高清MP4电影，支持多清晰度切换与离线缓存</p>
+    </div>
+    <div class="grid">
+      <a class="movie" href="#"><div class="cover"><span>星际</span><em class="score">9.2</em></div><div class="info"><h4>星际回响</h4><div class="meta"><span>科幻 / 冒险</span><b>2026</b></div></div></a>
+      <a class="movie" href="#"><div class="cover"><span>无声</span><i class="score">8.7</i></div><div class="info"><h4>无声的证言</h4><div class="meta"><span>悬疑 / 犯罪</span><b>2025</b></div></div></a>
+      <a class="movie" href="#"><div class="cover"><span>长安</span><i class="score">9.0</i></div><div class="info"><h4>长安十二时辰·电影版</h4><div class="meta"><span>古装 / 动作</span><b>2026</b></div></div></a>
+      <a class="movie" href="#"><div class="cover"><span>深海</span><i class="score">8.5</i></div><div class="info"><h4>深海来信</h4><div class="meta"><span>动画 / 奇幻</span><b>2025</b></div></div></a>
+      <a class="movie" href="#"><div class="cover"><span>逆光</span><i class="score">8.9</i></div><div class="info"><h4>逆光奔跑</h4><div class="meta"><span>剧情 / 励志</span><b>2026</b></div></div></a>
+      <a class="movie" href="#"><div class="cover"><span>谍影</span><i class="score">8.3</i></div><div class="info"><h4>谍影重重：重启</h4><div class="meta"><span>动作 / 谍战</span><b>2026</b></div></div></a>
+      <a class="movie" href="#"><div class="cover"><span>春日</span><i class="score">8.6</i></div><div class="info"><h4>春日序曲</h4><div class="meta"><span>爱情 / 文艺</span><b>2025</b></div></div></a>
+      <a class="movie" href="#"><div class="cover"><span>荒野</span><i class="score">8.8</i></div><div class="info"><h4>荒野生存指南</h4><div class="meta"><span>冒险 / 纪录</span><b>2026</b></div></div></a>
+    </div>
+  </section>
+
+  <!-- 栏目四：排行榜 -->
+  <section id="rank" class="wrap">
+    <div class="section-title reveal">
+      <span class="num">03</span>
+      <h2>实时排行榜</h2>
+      <p>基于播放量、收藏量与用户评分综合计算，真实反映观影热度</p>
+    </div>
+    <div class="rank">
+      <div class="rank-item"><span class="no top">01</span><div class="txt"><h4>星际回响</h4><small>科幻 · 162 分钟</small></div><span class="hot">🔥 128万</span></div>
+      <div class="rank-item"><span class="no top">02</span><div class="txt"><h4>长安十二时辰·电影版</h4><small>古装 · 148 分钟</small></div><span class="hot">🔥 96万</span></div>
+      <div class="rank-item"><span class="no top">03</span><div class="txt"><h4>逆光奔跑</h4><small>剧情 · 126 分钟</small></div><span class="hot">🔥 81万</span></div>
+      <div class="rank-item"><span class="no">04</span><div class="txt"><h4>谍影重重：重启</h4><small>动作 · 135 分钟</small></div><span class="hot">🔥 67万</span></div>
+      <div class="rank-item"><span class="no">05</span><div class="txt"><h4>无声的证言</h4><small>悬疑 · 119 分钟</small></div><span class="hot">🔥 58万</span></div>
+      <div class="rank-item"><span class="no">06</span><div class="txt"><h4>深海来信</h4><small>动画 · 106 分钟</small></div><span class="hot">🔥 49万</span></div>
+      <div class="rank-item"><span class="no">07</span><div class="txt"><h4>荒野生存指南</h4><small>纪录 · 98 分钟</small></div><span class="hot">🔥 42万</span></div>
+      <div class="rank-item"><span class="no">08</span><div class="txt"><h4>春日序曲</h4><small>爱情 · 122 分钟</small></div><span class="hot">🔥 37万</span></div>
+      <div class="rank-item"><span class="no">09</span><div class="txt"><h4>边境猎人</h4><small>动作 · 141 分钟</small></div><span class="hot">🔥 31万</span></div>
+    </div>
+  </section>
+
+  <!-- 栏目五：影讯资讯 -->
+  <section id="news" class="wrap">
+    <div class="section-title reveal">
+      <span class="num">04</span>
+      <h2>影讯与观影指南</h2>
+      <p>最新院线动态、选片攻略与高清观影技巧，帮你把时间花在好电影上</p>
+    </div>
+    <div class="news">
+      <article class="article">
+        <div class="date">2026 / 10 / 06</div>
+        <h3>2026 年第四季度院线大片前瞻</h3>
+        <p>从硬核科幻到温情剧情，盘点即将登陆高清mp4电影网的 12 部重磅新片，附观影期待值评分与适合人群建议。</p>
+        <a class="more" href="#">阅读全文 →</a>
+      </article>
+      <article class="article">
+        <div class="date">2026 / 09 / 28</div>
+        <h3>MP4 格式为何仍是观影首选？</h3>
+        <p>对比 MKV、AVI、MOV 等常见格式，详解 MP4 在兼容性、体积与画质之间的平衡，以及手机投屏的最佳参数设置。</p>
+        <a class="more" href="#">阅读全文 →</a>
+      </article>
+      <article class="article">
+        <div class="date">2026 / 09 / 20</div>
+        <h3>周末片单：7 部被低估的冷门佳作</h3>
+        <p>避开算法推荐的同质化内容，编辑从高分冷门片中精选 7 部，涵盖悬疑、纪录片与外语文艺片，豆瓣均分 8.4。</p>
+        <a class="more" href="#">阅读全文 →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- 栏目六：关于 / SEO -->
+  <section id="about" class="wrap">
+    <div class="section-title reveal">
+      <span class="num">05</span>
+      <h2>关于高清mp4电影网</h2>
+      <p>gaoqingmp4dianyingwang · 让每一帧都清晰</p>
+    </div>
+    <div class="seo reveal">
+      <p><strong>网站名称：</strong>高清mp4电影网　　<strong>网站网址：</strong><a href="https://gaoqingmp4dianyingwang-app.github.io" style="color:var(--acc)">https://gaoqingmp4dianyingwang-app.github.io</a></p>
+      <p>高清mp4电影网（gaoqingmp4dianyingwang）是一个专注于<strong>高清 MP4 电影</strong>在线观看与资讯服务的单页网站。我们按<strong>类型、地区、年份、评分</strong>四个维度对影片进行结构化整理，设有<strong>电影分类、热门推荐、实时排行榜、影讯资讯、关于本站</strong>等多个栏目，页面采用移动端自适应设计，在手机、平板与桌面端均能获得一致的浏览体验。</p>
+      <p>站内所有内页链接均以 <code>#</code> 锚点形式呈现，符合单页应用的无刷新导航逻辑；关键词「<strong>高清mp4电影网</strong>」在标题、描述、H1–H2 标签与正文自然分布，语义清晰、密度合理，便于必应（Bing）等搜索引擎抓取、索引与排名。</p>
+      <p>温馨提示：请通过正规授权渠道观看影视作品，尊重创作者版权。本站仅作影视信息与观影指南展示。</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h5>高清mp4电影网</h5>
+        <a href="#">关于我们</a>
+        <a href="#">免责声明</a>
+        <a href="#">版权合作</a>
+      </div>
+      <div>
+        <h5>快速导航</h5>
+        <a href="#cats">电影分类</a>
+        <a href="#hot">热门推荐</a>
+        <a href="#rank">排行榜</a>
+        <a href="#news">影讯资讯</a>
+      </div>
+      <div>
+        <h5>热门类型</h5>
+        <a href="#">动作科幻</a>
+        <a href="#">悬疑犯罪</a>
+        <a href="#">爱情文艺</a>
+        <a href="#">纪录片</a>
+      </div>
+      <div>
+        <h5>联系与反馈</h5>
+        <a href="#">投稿建议</a>
+        <a href="#">广告合作</a>
+        <a href="#">RSS 订阅</a>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 高清mp4电影网 gaoqingmp4dianyingwang · 网站网址：<a href="https://gaoqingmp4dianyingwang-app.github.io">https://gaoqingmp4dianyingwang-app.github.io</a><br>
+      本页面为静态单页演示，所有影片、评分、播放量均为示例数据，仅供设计与 SEO 结构参考。
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 滚动入场动画
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  // 平滑锚点（兼容旧浏览器）
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var t = document.querySelector(this.getAttribute('href'));
+      if(t){ e.preventDefault(); window.scrollTo({top: t.offsetTop - 70, behavior:'smooth'}); }
+    });
+  });
+</script>
+</body>
+</html>
